@@ -1,0 +1,11 @@
+{
+  "id": "aor",
+  "title": "Ambient Occlusion Renderer",
+  "author": "yamasung7-dot",
+  "description": "A voxel-aware ambient occlusion renderer foundation with mobile optimization tools for Blockbench.",
+  "version": "0.1.0",
+  "icon": "blur_on",
+  "min_version": "4.0.0",
+  "variant": "both",
+  "script": "plugin.js"
+}
