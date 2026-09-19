@@ -2,9 +2,12 @@
 // Blockbench plugin foundation
 
 (function() {
-    const AOR_VERSION = '0.1.0';
-    let liveAOEnabled = false;
-    let mobileOptimizationEnabled = true;
+    const AOR_VERSION = '0.1.1';
+    const AOR = typeof AORCore !== 'undefined' ? AORCore : {
+        settings: { liveAO: false, mobileMode: true },
+        setLiveAO(v) { this.settings.liveAO = v; },
+        setMobileMode(v) { this.settings.mobileMode = v; }
+    };
 
     Plugin.register('aor', {
         title: 'Ambient Occlusion Renderer',
@@ -13,6 +16,7 @@
         icon: 'blur_on',
         version: AOR_VERSION,
         variant: 'both',
+
         onload() {
             Blockbench.showQuickMessage(`AOR v${AOR_VERSION} loaded`);
 
@@ -21,8 +25,8 @@
                 description: 'Enable or disable live ambient occlusion preview.',
                 icon: 'visibility',
                 click() {
-                    liveAOEnabled = !liveAOEnabled;
-                    Blockbench.showQuickMessage(`Live AO: ${liveAOEnabled ? 'ON' : 'OFF'}`);
+                    AOR.setLiveAO(!AOR.settings.liveAO);
+                    Blockbench.showQuickMessage(`Live AO: ${AOR.settings.liveAO ? 'ON' : 'OFF'}`);
                 }
             }).addToMenu(MenuBar.menu.tools);
 
@@ -31,8 +35,8 @@
                 description: 'Adaptive pixel optimization for lower-power devices.',
                 icon: 'phone_android',
                 click() {
-                    mobileOptimizationEnabled = !mobileOptimizationEnabled;
-                    Blockbench.showQuickMessage(`Mobile Optimization: ${mobileOptimizationEnabled ? 'ON' : 'OFF'}`);
+                    AOR.setMobileMode(!AOR.settings.mobileMode);
+                    Blockbench.showQuickMessage(`Mobile Optimization: ${AOR.settings.mobileMode ? 'ON' : 'OFF'}`);
                 }
             }).addToMenu(MenuBar.menu.tools);
 
@@ -47,6 +51,7 @@
                 }
             }).addToMenu(MenuBar.menu.tools);
         },
+
         onunload() {
             Blockbench.showQuickMessage('AOR unloaded');
         }
